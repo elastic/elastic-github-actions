@@ -2,6 +2,6 @@ FROM docker:stable
 
 RUN apk add --update bash
 
-COPY run-elasticsearch.sh /run-elasticsearch.sh
+COPY script script
 
-ENTRYPOINT ["/run-elasticsearch.sh"]
+ENTRYPOINT ["./script/run-elasticsearch.sh"]
