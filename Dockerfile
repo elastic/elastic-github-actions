@@ -1,4 +1,4 @@
-FROM alpine:3
+FROM docker:stable
 
 RUN apk add --update bash
 
