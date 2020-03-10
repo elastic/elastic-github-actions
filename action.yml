@@ -1,0 +1,14 @@
+name: 'Run Elasticsearch'
+description: 'Run Elasticsearch'
+author: 'elastic'
+
+inputs:
+  elasticsearch-version:
+    description: 'The version of Elasticsearch you want to run'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    STACK_VERSION: ${{ inputs.elasticsearch-version }}
