@@ -103,7 +103,6 @@ END
     --health-interval=2s \
     --health-retries=20 \
     --health-timeout=2s \
-    --sysctl vm.max_map_count=262144 \
     --rm \
     docker.elastic.co/elasticsearch/"$elasticsearch_container";
 
@@ -113,3 +112,4 @@ END
   fi
 
 done
+
