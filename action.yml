@@ -12,3 +12,4 @@ runs:
   image: 'Dockerfile'
   env:
     STACK_VERSION: ${{ inputs.elasticsearch-version }}
+    DETACH: true
