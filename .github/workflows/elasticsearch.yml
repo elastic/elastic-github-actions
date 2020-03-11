@@ -18,11 +18,10 @@ jobs:
           sudo sysctl -w vm.max_map_count=262144
 
       - name: Start Elasticsearch
-        uses: ./
+        uses: ./elasticsearch
         with:
           elasticsearch-version: 8.0.0-SNAPSHOT
 
       - name: Elasticsearch is reachable
         run: |
           curl --verbose --show-error http://localhost:9200
-
