@@ -1,6 +1,10 @@
 name: 'Run Elasticsearch'
-description: 'Run Elasticsearch'
+description: 'This action spins up an Elasticsearch instance that can be accessed and used in your subsequent steps.'
 author: 'elastic'
+
+branding:
+  icon: 'database'
+  color: 'green'
 
 inputs:
   elasticsearch-version:
