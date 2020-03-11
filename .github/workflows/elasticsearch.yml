@@ -20,7 +20,7 @@ jobs:
       - name: Start Elasticsearch
         uses: ./elasticsearch
         with:
-          elasticsearch-version: 8.0.0-SNAPSHOT
+          stack-version: 8.0.0-SNAPSHOT
 
       - name: Elasticsearch is reachable
         run: |

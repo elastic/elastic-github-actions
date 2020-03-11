@@ -7,13 +7,13 @@ branding:
   color: 'green'
 
 inputs:
-  elasticsearch-version:
-    description: 'The version of Elasticsearch you want to run'
+  stack-version:
+    description: 'The version of the Elastic Stack you want to run'
     required: true
 
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    STACK_VERSION: ${{ inputs.elasticsearch-version }}
+    STACK_VERSION: ${{ inputs.stack-version }}
     DETACH: true

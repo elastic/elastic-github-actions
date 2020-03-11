@@ -13,9 +13,9 @@ ___
 
 ## Inputs
 
-| Name        | Required         | Default  | Description  |  
+| Name        | Required         | Default  | Description  |
 | ------------- |-------------| -----|-----|
-| `elasticsearch-version`     | Yes |  | The version of Elasticsearch you need to use, you can use any version present in [docker.elastic.co](https://www.docker.elastic.co/). |
+| `stack-version`     | Yes |  | The version of the Elastic Stack you need to use, you can use any version present in [docker.elastic.co](https://www.docker.elastic.co/). |
 
 ## Usage
 
@@ -32,7 +32,7 @@ You *must* also add the `Configure sysctl limits` step, otherwise Elasticsearch 
 - name: Runs Elasticsearch
   uses: elastic/elastic-github-actions/elasticsearch@master
   with:
-    elasticsearch-version: 7.6.0
+    stack-version: 7.6.0
 ```
 
 ## License
