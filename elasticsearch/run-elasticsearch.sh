@@ -5,7 +5,7 @@ if [[ -z $STACK_VERSION ]]; then
   exit 1
 fi
 
-# docker network create elastic
+docker network create elastic
 
 docker run \
   --rm \
