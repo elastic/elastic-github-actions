@@ -2,7 +2,7 @@
 
 # Elasticsearch Github Action
 
-![Elasticsearch Github Action](https://github.com/elastic/elasticsearch-github-action/workflows/Elasticsearch%20Github%20Action/badge.svg)
+![Elasticsearch Github Action](https://github.com/elastic/elasticsearch-github-action/workflows/Elasticsearch%20Github%20Action/badge.svg)  ![Stability:experimental](https://img.shields.io/badge/stability-experimental-orange)
 
 This action spins up an Elasticsearch instance that can be accessed and used in your subsequent steps.
 
