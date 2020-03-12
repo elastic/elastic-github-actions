@@ -21,7 +21,7 @@ docker run \
   --ulimit nofile=65536:65536 \
   --ulimit memlock=-1:-1 \
   --publish 9200:9200 \
-  --detach=false \
+  --detach \
   --network=elastic \
   --name=elasticsearch \
   docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
