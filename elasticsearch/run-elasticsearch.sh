@@ -23,5 +23,19 @@ docker run \
   --publish 9200:9200 \
   --detach \
   --network=elastic \
-  --name=elasticsearch \
+  --name=es1 \
   docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+
+docker run \
+  --network elastic \
+  --rm \
+  appropriate/curl \
+  --max-time 120 \
+  --retry 120 \
+  --retry-delay 1 \
+  --retry-connrefused \
+  --show-error \
+  --silent \
+  http://es1:9200
+
+echo "Elasticsearch up and running"
