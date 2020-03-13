@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   run-action:
-    name: Start Elasticasearch
+    name: Start Elasticsearch
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,3 +25,35 @@ jobs:
       - name: Elasticsearch is reachable
         run: |
           curl --verbose --show-error http://localhost:9200
+
+  run-multiple-nodes:
+    name: Start multiple Elasticsearch nodes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Configure sysctl limits
+        run: |
+          sudo swapoff -a
+          sudo sysctl -w vm.swappiness=1
+          sudo sysctl -w fs.file-max=262144
+          sudo sysctl -w vm.max_map_count=262144
+
+      - name: Start Elasticsearch
+        uses: ./elasticsearch
+        with:
+          stack-version: 8.0.0-SNAPSHOT
+          nodes: 3
+
+      - name: Elasticsearch Node es1 is reachable
+        run: |
+          curl --verbose --show-error http://localhost:9200
+
+      - name: Elasticsearch Node es2 is reachable
+        run: |
+          curl --verbose --show-error http://localhost:9201
+
+      - name: Elasticsearch Node es3 is reachable
+        run: |
+          curl --verbose --show-error http://localhost:9202
