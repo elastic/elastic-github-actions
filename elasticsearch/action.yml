@@ -10,10 +10,14 @@ inputs:
   stack-version:
     description: 'The version of the Elastic Stack you want to run'
     required: true
+  nodes:
+    description: 'Number of nodes in the cluster'
+    required: false
+    default: 1
 
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
     STACK_VERSION: ${{ inputs.stack-version }}
-    DETACH: true
+    NODES: ${{ inputs.nodes }}
