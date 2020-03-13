@@ -57,3 +57,7 @@ jobs:
       - name: Elasticsearch Node es3 is reachable
         run: |
           curl --verbose --show-error http://localhost:9202
+
+      - name: All nodes joined the cluster
+        run: |
+          curl http://localhost:9200/_nodes/http?filter_path=nodes.*.name
