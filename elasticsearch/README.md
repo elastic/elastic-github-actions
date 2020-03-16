@@ -16,6 +16,7 @@ ___
 | Name        | Required         | Default  | Description  |
 | ------------- |-------------| -----|-----|
 | `stack-version`     | Yes |  | The version of the Elastic Stack you need to use, you can use any version present in [docker.elastic.co](https://www.docker.elastic.co/). |
+| `nodes`     | No | 1 | Number of nodes in the cluster. |
 
 ## Usage
 
