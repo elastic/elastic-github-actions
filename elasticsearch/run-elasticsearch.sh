@@ -7,30 +7,51 @@ if [[ -z $STACK_VERSION ]]; then
   exit 1
 fi
 
+MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
+
 docker network create elastic
 
 NODES=${NODES-1}
 for (( node=1; node<=$NODES; node++ ))
 do
   port=$((9200 + $node - 1))
-  docker run \
-    --rm \
-    --env "node.name=es${node}" \
-    --env "cluster.name=docker-elasticsearch" \
-    --env "cluster.initial_master_nodes=es1" \
-    --env "discovery.seed_hosts=es1" \
-    --env "cluster.routing.allocation.disk.threshold_enabled=false" \
-    --env "bootstrap.memory_lock=true" \
-    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
-    --env "xpack.security.enabled=false" \
-    --env "xpack.license.self_generated.type=basic" \
-    --ulimit nofile=65536:65536 \
-    --ulimit memlock=-1:-1 \
-    --publish "${port}:9200" \
-    --detach \
-    --network=elastic \
-    --name="es${node}" \
-    docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+  if [ "x${MAJOR_VERSION}" == 'x5' ] || [ "x${MAJOR_VERSION}" == 'x6' ]; then
+    docker run \
+      --rm \
+      --env "node.name=es${node}" \
+      --env "cluster.name=docker-elasticsearch" \
+      --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+      --env "bootstrap.memory_lock=true" \
+      --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+      --env "xpack.security.enabled=false" \
+      --env "xpack.license.self_generated.type=basic" \
+      --ulimit nofile=65536:65536 \
+      --ulimit memlock=-1:-1 \
+      --publish "${port}:9200" \
+      --detach \
+      --network=elastic \
+      --name="es${node}" \
+      docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+  elif [ "x${MAJOR_VERSION}" == 'x7' ] || [ "x${MAJOR_VERSION}" == 'x8' ]; then
+    docker run \
+      --rm \
+      --env "node.name=es${node}" \
+      --env "cluster.name=docker-elasticsearch" \
+      --env "cluster.initial_master_nodes=es1" \
+      --env "discovery.seed_hosts=es1" \
+      --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+      --env "bootstrap.memory_lock=true" \
+      --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+      --env "xpack.security.enabled=false" \
+      --env "xpack.license.self_generated.type=basic" \
+      --ulimit nofile=65536:65536 \
+      --ulimit memlock=-1:-1 \
+      --publish "${port}:9200" \
+      --detach \
+      --network=elastic \
+      --name="es${node}" \
+      docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+  fi
 done
 
 docker run \
