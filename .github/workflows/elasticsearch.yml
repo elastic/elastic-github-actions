@@ -23,7 +23,7 @@ jobs:
       - name: Start Elasticsearch
         uses: ./elasticsearch
         with:
-          stack-version: {{ $matrix.elasticsearch }}
+          stack-version: ${{ matrix.elasticsearch }}
 
       - name: Elasticsearch is reachable
         run: |
@@ -49,7 +49,7 @@ jobs:
       - name: Start Elasticsearch
         uses: ./elasticsearch
         with:
-          stack-version: {{ $matrix.elasticsearch }}
+          stack-version: ${{ matrix.elasticsearch }}
           nodes: 3
 
       - name: Elasticsearch Node es1 is reachable
