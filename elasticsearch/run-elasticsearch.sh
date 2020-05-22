@@ -11,10 +11,16 @@ MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
 
 docker network create elastic
 
-NODES=${NODES-1}
-for (( node=1; node<=$NODES; node++ ))
+for (( node=1; node<=${NODES-1}; node++ ))
+do
+  port_com=$((9300 + $node - 1))
+  UNICAST_HOSTS+="es$node:${port_com}"
+done
+
+for (( node=1; node<=${NODES-1}; node++ ))
 do
   port=$((9200 + $node - 1))
+  port_com=$((9300 + $node - 1))
   if [ "x${MAJOR_VERSION}" == 'x6' ]; then
     docker run \
       --rm \
@@ -25,9 +31,12 @@ do
       --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
       --env "xpack.security.enabled=false" \
       --env "xpack.license.self_generated.type=basic" \
+      --env "discovery.zen.ping.unicast.hosts=${UNICAST_HOSTS}" \
+      --env "discovery.zen.minimum_master_nodes=${NODES}" \
       --ulimit nofile=65536:65536 \
       --ulimit memlock=-1:-1 \
       --publish "${port}:9200" \
+      --publish "${port_com}:9300" \
       --detach \
       --network=elastic \
       --name="es${node}" \
