@@ -1,0 +1,27 @@
+name: Elastic Enterprise Search Github Action
+
+on: [push, pull_request]
+
+jobs:
+  run-action:
+    name: Start Elastic Enterprise Search
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Configure sysctl limits
+        run: |
+          sudo swapoff -a
+          sudo sysctl -w vm.swappiness=1
+          sudo sysctl -w fs.file-max=262144
+          sudo sysctl -w vm.max_map_count=262144
+
+      - name: Start Elastic Enterprise Search
+        uses: ./enterprise-search
+        with:
+          stack-version: 7.x-SNAPSHOT
+
+      - name: Enterprise Search is reachable
+        run: |
+          curl --verbose --show-error http://localhost:8080/swiftype-app-version

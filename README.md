@@ -15,6 +15,9 @@ ___
 
 This action spins up an Elasticsearch instance that can be accessed and used in your subsequent steps.
 
+#### [Elastic Enterprise Search Github Action](./enterprise-search)
+
+This action spins up an Elasticsearch instance with Elastic Enterprise Search that can be accessed and used in your subsequent steps.
 
 ## License
 
