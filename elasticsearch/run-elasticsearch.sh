@@ -67,6 +67,7 @@ docker run \
   --network elastic \
   --rm \
   appropriate/curl \
+  --ipv4 \
   --max-time 120 \
   --retry 120 \
   --retry-delay 1 \
