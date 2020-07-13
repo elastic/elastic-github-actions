@@ -19,7 +19,7 @@ done
 
 for (( node=1; node<=${NODES-1}; node++ ))
 do
-  port=$((9200 + $node - 1))
+  port=$((PORT + $node - 1))
   port_com=$((9300 + $node - 1))
   if [ "x${MAJOR_VERSION}" == 'x6' ]; then
     docker run \
@@ -35,8 +35,8 @@ do
       --env "discovery.zen.minimum_master_nodes=${NODES}" \
       --ulimit nofile=65536:65536 \
       --ulimit memlock=-1:-1 \
-      --publish "${port}:9200" \
-      --publish "${port_com}:9300" \
+      --publish "${port}:${port}" \
+      --publish "${port_com}:${port_com}" \
       --detach \
       --network=elastic \
       --name="es${node}" \
@@ -55,7 +55,7 @@ do
       --env "xpack.license.self_generated.type=basic" \
       --ulimit nofile=65536:65536 \
       --ulimit memlock=-1:-1 \
-      --publish "${port}:9200" \
+      --publish "${port}:${port}" \
       --detach \
       --network=elastic \
       --name="es${node}" \
@@ -73,7 +73,7 @@ docker run \
   --retry-connrefused \
   --show-error \
   --silent \
-  http://es1:9200
+  http://es1:$PORT
 
 sleep 10
 

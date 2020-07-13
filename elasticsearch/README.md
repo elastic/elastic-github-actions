@@ -13,10 +13,11 @@ ___
 
 ## Inputs
 
-| Name        | Required         | Default  | Description  |
-| ------------- |-------------| -----|-----|
-| `stack-version`     | Yes |  | The version of the Elastic Stack you need to use, you can use any version present in [docker.elastic.co](https://www.docker.elastic.co/). |
-| `nodes`     | No | 1 | Number of nodes in the cluster. |
+| Name            | Required      | Default | Description                                                                                                                               |
+| -------------   | ------------- |   ----- | -----                                                                                                                                     |
+| `stack-version` | Yes           |         | The version of the Elastic Stack you need to use, you can use any version present in [docker.elastic.co](https://www.docker.elastic.co/). |
+| `nodes`         | No            |       1 | Number of nodes in the cluster.                                                                                                           |
+| `port`          | No            |    9200 | Port where you want to run Elasticsearch.                                                                                                 |
 
 ## Usage
 
