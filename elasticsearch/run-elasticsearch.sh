@@ -21,7 +21,22 @@ for (( node=1; node<=${NODES-1}; node++ ))
 do
   port=$((PORT + $node - 1))
   port_com=$((9300 + $node - 1))
-  if [ "x${MAJOR_VERSION}" == 'x6' ]; then
+  if [ "x${MAJOR_VERSION}" == 'x5' ]; then
+    docker run \ 
+    --env "node.name=es${node}" \
+    --env "cluster.name=docker-elasticsearch" \
+    --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+    --env "bootstrap.memory_lock=true" \
+    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+    --env "xpack.security.enabled=false" \
+    --env "http.port=${port}" \
+    --ulimit nofile=262144:262144 \
+    --ulimit memlock=-1:-1 \
+    --publish "${port}:${port}" \
+    --detach \
+    --name="es${node}" \
+    docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+  elif [ "x${MAJOR_VERSION}" == 'x6' ]; then
     docker run \
       --rm \
       --env "node.name=es${node}" \
