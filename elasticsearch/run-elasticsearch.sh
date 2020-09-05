@@ -23,6 +23,7 @@ do
   port_com=$((9300 + $node - 1))
   if [ "x${MAJOR_VERSION}" == 'x5' ]; then
     docker run \
+      --rm \
       --env "node.name=es${node}" \
       --env "cluster.name=docker-elasticsearch" \
       --env "cluster.routing.allocation.disk.threshold_enabled=false" \
@@ -34,6 +35,7 @@ do
       --ulimit memlock=-1:-1 \
       --publish "${port}:${port}" \
       --detach \
+      --network elastic \
       --name="es${node}" \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
   elif [ "x${MAJOR_VERSION}" == 'x6' ]; then
