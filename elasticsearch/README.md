@@ -60,4 +60,4 @@ Disabling security is not recommended, however, for testing purposes, you can do
 
 ## License
 
-This software is licensed under the [Apache 2 license](./LICENSE).
+This software is licensed under the [Apache 2 license](../LICENSE).
