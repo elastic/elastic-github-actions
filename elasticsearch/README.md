@@ -39,4 +39,4 @@ You *must* also add the `Configure sysctl limits` step, otherwise Elasticsearch 
 
 ## License
 
-This software is licensed under the [Apache 2 license](./LICENSE).
+This software is licensed under the [Apache 2 license](../LICENSE).
