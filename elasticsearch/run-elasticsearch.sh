@@ -55,6 +55,7 @@ do
       --env "xpack.security.enabled=false" \
       --env "xpack.license.self_generated.type=basic" \
       --env "http.port=${port}" \
+      --env "action.destructive_requires_name=false" \
       --ulimit nofile=65536:65536 \
       --ulimit memlock=-1:-1 \
       --publish "${port}:${port}" \
