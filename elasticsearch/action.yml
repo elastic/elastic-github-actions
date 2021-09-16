@@ -18,6 +18,10 @@ inputs:
     description: 'Port where you want to run Elasticsearch'
     required: false
     default: 9200
+  elasticsearch_password:
+    description: 'The password for the user elastic in your cluster'
+    required: false
+    default: 'changeme'
 
 runs:
   using: 'docker'
