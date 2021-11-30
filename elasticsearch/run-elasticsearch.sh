@@ -12,6 +12,7 @@ MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
 docker network create elastic
 
 mkdir -p /es/plugins/
+chown -R 1000:1000 /es/
 
 if [[ ! -z $PLUGINS ]]; then
   docker run --rm \
