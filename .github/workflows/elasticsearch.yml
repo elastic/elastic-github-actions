@@ -136,7 +136,7 @@ jobs:
           curl http://localhost:9250/_nodes/http?filter_path=nodes.*.name
 
   run-with-plugins:
-    name: Start Elasticsearch
+    name: Start Elasticsearch with Plugins
     runs-on: ubuntu-latest
     strategy:
       matrix:
