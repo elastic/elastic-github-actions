@@ -22,6 +22,9 @@ inputs:
     description: 'The password for the user elastic in your cluster'
     required: false
     default: 'changeme'
+  plugins:
+    description: 'Plugins that you want to include'
+    required: false
 
 runs:
   using: 'docker'
@@ -30,3 +33,4 @@ runs:
     STACK_VERSION: ${{ inputs.stack-version }}
     NODES: ${{ inputs.nodes }}
     PORT: ${{ inputs.port }}
+    PLUGINS: ${{ inputs.plugins }}

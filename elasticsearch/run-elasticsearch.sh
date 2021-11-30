@@ -11,6 +11,17 @@ MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
 
 docker network create elastic
 
+mkdir -p /es/plugins/
+
+if [[ ! -z $PLUGINS ]]; then
+  docker run --rm \
+    --network=elastic \
+    -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+    --entrypoint=/usr/share/elasticsearch/bin/elasticsearch-plugin \
+    docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION} \
+    install ${PLUGINS/\\n/ } --batch
+fi
+
 for (( node=1; node<=${NODES-1}; node++ ))
 do
   port_com=$((9300 + $node - 1))
@@ -41,6 +52,7 @@ do
       --detach \
       --network=elastic \
       --name="es${node}" \
+      -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
   elif [ "x${MAJOR_VERSION}" == 'x7' ]; then
     docker run \
@@ -62,6 +74,7 @@ do
       --detach \
       --network=elastic \
       --name="es${node}" \
+      -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
   elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
     elasticsearch_password=${elasticsearch_password-'changeme'}
@@ -86,6 +99,7 @@ do
       --detach \
       --network=elastic \
       --name="es${node}" \
+      -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
   fi
 done
