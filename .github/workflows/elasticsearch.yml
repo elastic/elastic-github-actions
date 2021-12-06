@@ -134,3 +134,32 @@ jobs:
       - name: All nodes joined the cluster
         run: |
           curl http://localhost:9250/_nodes/http?filter_path=nodes.*.name
+
+  run-with-plugins:
+    name: Start Elasticsearch with Plugins
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elasticsearch: [ "7.15.1" ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Configure sysctl limits
+        run: |
+          sudo swapoff -a
+          sudo sysctl -w vm.swappiness=1
+          sudo sysctl -w fs.file-max=262144
+          sudo sysctl -w vm.max_map_count=262144
+
+      - name: Start Elasticsearch
+        uses: ./elasticsearch
+        with:
+          stack-version: ${{ matrix.elasticsearch }}
+          plugins: |
+            ingest-attachment
+            analysis-icu
+
+      - name: Elasticsearch is reachable
+        run: |
+          curl --verbose --show-error http://localhost:9200
