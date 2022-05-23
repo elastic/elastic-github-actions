@@ -10,6 +10,10 @@ inputs:
   stack-version:
     description: 'The version of the Elastic Stack you want to run'
     required: true
+  security-enabled:
+    description: 'Enable or disable HTTPS, enabled by default'
+    default: 'true'
+    required: false
   nodes:
     description: 'Number of nodes in the cluster'
     required: false
@@ -34,3 +38,4 @@ runs:
     NODES: ${{ inputs.nodes }}
     PORT: ${{ inputs.port }}
     PLUGINS: ${{ inputs.plugins }}
+    SECURITY_ENABLED: ${{ inputs.security-enabled }}

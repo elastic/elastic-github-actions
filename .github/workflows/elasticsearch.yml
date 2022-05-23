@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.0.0-SNAPSHOT"]
+        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.2.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -23,6 +23,7 @@ jobs:
       - name: Start Elasticsearch
         uses: ./elasticsearch
         with:
+          security-enabled: false
           stack-version: ${{ matrix.elasticsearch }}
 
       - name: Elasticsearch is reachable
@@ -34,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.0.0-SNAPSHOT"]
+        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.2.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -49,6 +50,7 @@ jobs:
       - name: Start Elasticsearch
         uses: ./elasticsearch
         with:
+          security-enabled: false
           stack-version: ${{ matrix.elasticsearch }}
           nodes: 3
 
@@ -73,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.0.0-SNAPSHOT"]
+        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.2.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -88,6 +90,7 @@ jobs:
       - name: Start Elasticsearch
         uses: ./elasticsearch
         with:
+          security-enabled: false
           stack-version: ${{ matrix.elasticsearch }}
           port: 9250
 
@@ -100,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.0.0-SNAPSHOT"]
+        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.2.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -115,6 +118,7 @@ jobs:
       - name: Start Elasticsearch
         uses: ./elasticsearch
         with:
+          security-enabled: false
           stack-version: ${{ matrix.elasticsearch }}
           nodes: 3
           port: 9250
@@ -155,6 +159,7 @@ jobs:
       - name: Start Elasticsearch
         uses: ./elasticsearch
         with:
+          security-enabled: false
           stack-version: ${{ matrix.elasticsearch }}
           plugins: |
             ingest-attachment
@@ -163,3 +168,30 @@ jobs:
       - name: Elasticsearch is reachable
         run: |
           curl --verbose --show-error http://localhost:9200
+
+  run-action-with-security:
+    name: Start Elasticsearch with security
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elasticsearch: ["8.2.0-SNAPSHOT"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Configure sysctl limits
+        run: |
+          sudo swapoff -a
+          sudo sysctl -w vm.swappiness=1
+          sudo sysctl -w fs.file-max=262144
+          sudo sysctl -w vm.max_map_count=262144
+
+      - name: Start Elasticsearch
+        uses: ./elasticsearch
+        with:
+          stack-version: ${{ matrix.elasticsearch }}
+
+      - name: Elasticsearch is reachable
+        run: |
+          curl --verbose --show-error -k -u elastic:changeme https://localhost:9200
+
