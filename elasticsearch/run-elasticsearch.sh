@@ -78,30 +78,52 @@ do
       -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
   elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
-    elasticsearch_password=${elasticsearch_password-'changeme'}
-    docker run \
-      --rm \
-      --env "ELASTIC_PASSWORD=${elasticsearch_password}" \
-      --env "xpack.security.enabled=true" \
-      --env "node.name=es${node}" \
-      --env "cluster.name=docker-elasticsearch" \
-      --env "cluster.initial_master_nodes=es1" \
-      --env "discovery.seed_hosts=es1" \
-      --env "cluster.routing.allocation.disk.threshold_enabled=false" \
-      --env "bootstrap.memory_lock=true" \
-      --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
-      --env "xpack.security.enabled=false" \
-      --env "xpack.license.self_generated.type=basic" \
-      --env "http.port=${port}" \
-      --env "action.destructive_requires_name=false" \
-      --ulimit nofile=65536:65536 \
-      --ulimit memlock=-1:-1 \
-      --publish "${port}:${port}" \
-      --detach \
-      --network=elastic \
-      --name="es${node}" \
-      -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
-      docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    if [ "${SECURITY_ENABLED}" == 'true' ]; then
+      elasticsearch_password=${elasticsearch_password-'changeme'}
+      docker run \
+        --rm \
+        --env "ELASTIC_PASSWORD=${elasticsearch_password}" \
+        --env "xpack.license.self_generated.type=basic" \
+        --env "node.name=es${node}" \
+        --env "cluster.name=docker-elasticsearch" \
+        --env "cluster.initial_master_nodes=es1" \
+        --env "discovery.seed_hosts=es1" \
+        --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+        --env "bootstrap.memory_lock=true" \
+        --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+        --env "http.port=${port}" \
+        --env "action.destructive_requires_name=false" \
+        --ulimit nofile=65536:65536 \
+        --ulimit memlock=-1:-1 \
+        --publish "${port}:${port}" \
+        --network=elastic \
+        --name="es${node}" \
+        --detach \
+        -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+        docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    else
+      docker run \
+        --rm \
+        --env "xpack.security.enabled=false" \
+        --env "node.name=es${node}" \
+        --env "cluster.name=docker-elasticsearch" \
+        --env "cluster.initial_master_nodes=es1" \
+        --env "discovery.seed_hosts=es1" \
+        --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+        --env "bootstrap.memory_lock=true" \
+        --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+        --env "xpack.license.self_generated.type=basic" \
+        --env "http.port=${port}" \
+        --env "action.destructive_requires_name=false" \
+        --ulimit nofile=65536:65536 \
+        --ulimit memlock=-1:-1 \
+        --publish "${port}:${port}" \
+        --network=elastic \
+        --name="es${node}" \
+        --detach \
+        -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+        docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    fi
   fi
 done
 
