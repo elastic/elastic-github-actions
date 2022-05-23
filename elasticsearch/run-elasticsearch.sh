@@ -127,17 +127,33 @@ do
   fi
 done
 
-docker run \
-  --network elastic \
-  --rm \
-  appropriate/curl \
-  --max-time 120 \
-  --retry 120 \
-  --retry-delay 1 \
-  --retry-connrefused \
-  --show-error \
-  --silent \
-  http://es1:$PORT
+if [ "x${MAJOR_VERSION}" == 'x8' ] && [ "${SECURITY_ENABLED}" == 'true' ]; then
+  docker run \
+    --network elastic \
+    --rm \
+    appropriate/curl \
+    --max-time 120 \
+    --retry 120 \
+    --retry-delay 1 \
+    --retry-connrefused \
+    --show-error \
+    --silent \
+    -k \
+    -u elastic:${elasticsearch_password-'changeme'} \
+    https://es1:$PORT
+else
+  docker run \
+    --network elastic \
+    --rm \
+    appropriate/curl \
+    --max-time 120 \
+    --retry 120 \
+    --retry-delay 1 \
+    --retry-connrefused \
+    --show-error \
+    --silent \
+    http://es1:$PORT
+fi
 
 sleep 10
 
