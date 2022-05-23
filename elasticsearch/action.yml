@@ -38,4 +38,4 @@ runs:
     NODES: ${{ inputs.nodes }}
     PORT: ${{ inputs.port }}
     PLUGINS: ${{ inputs.plugins }}
-    SECURITY_ENABLED: ${{ input.security-enabled }}
+    SECURITY_ENABLED: ${{ inputs.security-enabled }}
