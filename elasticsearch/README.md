@@ -20,6 +20,7 @@ ___
 | `nodes`                  | No       | 1        | Number of nodes in the cluster.                                                                                                           |
 | `port`                   | No       | 9200     | Port where you want to run Elasticsearch.                                                                                                 |
 | `elasticsearch_password` | No       | changeme | The password for the user elastic in your cluster                                                                                         |
+| `plugins`                | No       | -        | Plugins that you want to include                                                                                                          |
 
 ## Usage
 
