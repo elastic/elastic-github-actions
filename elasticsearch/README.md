@@ -13,13 +13,13 @@ ___
 
 ## Inputs
 
-| Name            | Required      |  Default | Description                                                                                                                               |
-| -------------   | ------------- |  ------- | -----                                                                                                                                     |
-| `stack-version` | Yes           |          | The version of the Elastic Stack you need to use, you can use any version present in [docker.elastic.co](https://www.docker.elastic.co/). |
-| `security-enabled` | No           |    true      | Only available in v8. Set to `false` to disable https and basic authentication |
-| `nodes`         | No            |        1 | Number of nodes in the cluster.                                                                                                           |
-| `port`          | No            |     9200 | Port where you want to run Elasticsearch.                                                                                                 |
-| `password`      | No            | changeme | The password for the user elastic in your cluster                                                                                         |
+| Name                     | Required | Default  | Description                                                                                                                               |
+|--------------------------|----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `stack-version`          | Yes      |          | The version of the Elastic Stack you need to use, you can use any version present in [docker.elastic.co](https://www.docker.elastic.co/). |
+| `security-enabled`       | No       | true     | Only available in v8. Set to `false` to disable https and basic authentication                                                            |
+| `nodes`                  | No       | 1        | Number of nodes in the cluster.                                                                                                           |
+| `port`                   | No       | 9200     | Port where you want to run Elasticsearch.                                                                                                 |
+| `elasticsearch_password` | No       | changeme | The password for the user elastic in your cluster                                                                                         |
 
 ## Usage
 
