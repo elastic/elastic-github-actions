@@ -190,8 +190,9 @@ jobs:
         uses: ./elasticsearch
         with:
           stack-version: ${{ matrix.elasticsearch }}
+          elasticsearch_password: 'changedpassword'
 
       - name: Elasticsearch is reachable
         run: |
-          curl --verbose --show-error -k -u elastic:changeme https://localhost:9200
+          curl --verbose --show-error -k -u elastic:changedpassword https://localhost:9200
 
