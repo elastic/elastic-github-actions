@@ -29,6 +29,9 @@ inputs:
   plugins:
     description: 'Plugins that you want to include'
     required: false
+  license:
+    description: 'License for the Elasticsearch instance'
+    required: false
 
 runs:
   using: 'docker'
@@ -39,3 +42,4 @@ runs:
     PORT: ${{ inputs.port }}
     PLUGINS: ${{ inputs.plugins }}
     SECURITY_ENABLED: ${{ inputs.security-enabled }}
+    LICENSE: ${{ inputs.license }}

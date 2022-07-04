@@ -42,7 +42,7 @@ do
       --env "bootstrap.memory_lock=true" \
       --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
       --env "xpack.security.enabled=false" \
-      --env "xpack.license.self_generated.type=basic" \
+      --env "xpack.license.self_generated.type=${LICENSE}" \
       --env "discovery.zen.ping.unicast.hosts=${UNICAST_HOSTS}" \
       --env "discovery.zen.minimum_master_nodes=${NODES}" \
       --env "http.port=${port}" \
@@ -66,7 +66,7 @@ do
       --env "bootstrap.memory_lock=true" \
       --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
       --env "xpack.security.enabled=false" \
-      --env "xpack.license.self_generated.type=basic" \
+      --env "xpack.license.self_generated.type=${LICENSE}" \
       --env "http.port=${port}" \
       --env "action.destructive_requires_name=false" \
       --ulimit nofile=65536:65536 \
@@ -83,7 +83,7 @@ do
       docker run \
         --rm \
         --env "ELASTIC_PASSWORD=${elasticsearch_password}" \
-        --env "xpack.license.self_generated.type=basic" \
+        --env "xpack.license.self_generated.type=${LICENSE}" \
         --env "node.name=es${node}" \
         --env "cluster.name=docker-elasticsearch" \
         --env "cluster.initial_master_nodes=es1" \
@@ -112,7 +112,7 @@ do
         --env "cluster.routing.allocation.disk.threshold_enabled=false" \
         --env "bootstrap.memory_lock=true" \
         --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
-        --env "xpack.license.self_generated.type=basic" \
+        --env "xpack.license.self_generated.type=${LICENSE}" \
         --env "http.port=${port}" \
         --env "action.destructive_requires_name=false" \
         --ulimit nofile=65536:65536 \

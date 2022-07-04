@@ -160,6 +160,7 @@ jobs:
         uses: ./elasticsearch
         with:
           security-enabled: false
+          license: trial
           stack-version: ${{ matrix.elasticsearch }}
           plugins: |
             ingest-attachment
