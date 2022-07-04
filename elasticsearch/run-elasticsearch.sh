@@ -11,16 +11,17 @@ MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
 
 docker network create elastic
 
-mkdir -p /es/plugins/
+mkdir /es/
+touch /es/elasticsearch-plugins.yml
 chown -R 1000:1000 /es/
 
 if [[ ! -z $PLUGINS ]]; then
-  docker run --rm \
-    --network=elastic \
-    -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
-    --entrypoint=/usr/share/elasticsearch/bin/elasticsearch-plugin \
-    docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION} \
-    install ${PLUGINS/\\n/ } --batch
+  # Testing https://www.elastic.co/guide/en/elasticsearch/plugins/current/manage-plugins-using-configuration-file.htlm
+  echo 'plugins:' > /es/elasticsearch-plugins.yml
+  for p in ${PLUGINS[@]}
+  do
+    echo "  - id: $p" >> /es/elasticsearch-plugins.yml
+  done
 fi
 
 for (( node=1; node<=${NODES-1}; node++ ))
@@ -53,7 +54,7 @@ do
       --detach \
       --network=elastic \
       --name="es${node}" \
-      -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+      -v /es/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
   elif [ "x${MAJOR_VERSION}" == 'x7' ]; then
     docker run \
@@ -75,7 +76,7 @@ do
       --detach \
       --network=elastic \
       --name="es${node}" \
-      -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+      -v /es/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
   elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
     if [ "${SECURITY_ENABLED}" == 'true' ]; then
@@ -99,7 +100,7 @@ do
         --network=elastic \
         --name="es${node}" \
         --detach \
-        -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+        -v /es/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml \
         docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     else
       docker run \
@@ -121,7 +122,7 @@ do
         --network=elastic \
         --name="es${node}" \
         --detach \
-        -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+        -v /es/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml \
         docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     fi
   fi
