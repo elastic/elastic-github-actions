@@ -9,7 +9,7 @@ fi
 
 MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
 
-docker network create elastic
+docker network inspect elastic >/dev/null 2>&1 || docker network create elastic
 
 mkdir -p /es/plugins/
 chown -R 1000:1000 /es/
