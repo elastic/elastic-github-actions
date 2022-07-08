@@ -31,7 +31,7 @@ done
 for (( node=1; node<=${NODES-1}; node++ ))
 do
   port=$((PORT + $node - 1))
-  port_com=$((9300 + $node - 1))
+  port_com=$(($PORT + $node - 1))
   # Common parameters
   environment=($(cat <<-END
     --rm
