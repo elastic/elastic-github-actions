@@ -10,16 +10,19 @@ MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
 PLUGINS=${PLUGINS:-}
 docker network inspect elastic >/dev/null 2>&1 || docker network create elastic
 
+USERID=1000
+
 mkdir -p /es/plugins
-chown -R 1000:1000 /es/
+chown -R $USERID:$USERID /es/
+chmod -R 777 /es
 
 if [[ ! -z $PLUGINS ]]; then
   docker run --rm \
-         --network=elastic \
-         -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
-         --entrypoint=/usr/share/elasticsearch/bin/elasticsearch-plugin \
-         docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION} \
-         install ${PLUGINS/\\n/ } --batch
+     --network=elastic \
+     -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+     --entrypoint=/usr/share/elasticsearch/bin/elasticsearch-plugin \
+     docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION} \
+     install ${PLUGINS/\\n/ } --batch
 fi
 
 for (( node=1; node<=${NODES-1}; node++ ))
@@ -53,7 +56,7 @@ END
            --env discovery.zen.minimum_master_nodes=${NODES}
 END
 ))
-  elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
+  else
     if [ "${SECURITY_ENABLED}" == 'true' ]; then
       elasticsearch_password=${elasticsearch_password-'changeme'}
       environment+=($(cat <<-END
@@ -86,6 +89,7 @@ END
   fi
   # Final parameters
   environment+=($(cat <<-END
+        --detach
         --network=elastic
         --name=es${node}
         --rm
