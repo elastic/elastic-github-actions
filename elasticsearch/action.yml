@@ -32,6 +32,7 @@ inputs:
   license:
     description: 'License for the Elasticsearch instance'
     required: false
+    default: 'basic'
 
 runs:
   using: 'docker'

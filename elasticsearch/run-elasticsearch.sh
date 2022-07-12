@@ -34,7 +34,6 @@ do
   port_com=$(($PORT + $node - 1))
   # Common parameters
   environment=($(cat <<-END
-    --rm
     --env node.name=es${node}
     --env cluster.name=docker-elasticsearch
     --env cluster.routing.allocation.disk.threshold_enabled=false
@@ -52,13 +51,15 @@ END
     environment+=($(cat <<-END
            --env discovery.zen.ping.unicast.hosts=${UNICAST_HOSTS}
            --env discovery.zen.minimum_master_nodes=${NODES}
-           --publish ${port_com}:${port_com}
 END
 ))
   elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
     if [ "${SECURITY_ENABLED}" == 'true' ]; then
       elasticsearch_password=${elasticsearch_password-'changeme'}
-      environment+=' --env ELASTIC_PASSWORD=${elasticsearch_password}'
+      environment+=($(cat <<-END
+          --env ELASTIC_PASSWORD=${elasticsearch_password}
+END
+))
     else
       environment+=($(cat <<-END
           --env xpack.security.enabled=false
