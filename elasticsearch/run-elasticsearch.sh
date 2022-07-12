@@ -87,7 +87,6 @@ END
   fi
   # Final parameters
   environment+=($(cat <<-END
-        --detach
         --network=elastic
         --name=es${node}
         --rm
