@@ -16,7 +16,8 @@ chown -R 1000:1000 /es/
 if [[ ! -z $PLUGINS ]]; then
   # Testing https://www.elastic.co/guide/en/elasticsearch/plugins/current/manage-plugins-using-configuration-file.htlm
   echo 'plugins:' > /es/elasticsearch-plugins.yml
-  for p in ${PLUGINS[@]}
+  plugins_array=($PLUGINS)
+  for p in ${plugins_array[@]}
   do
     echo "  - id: $p" >> /es/elasticsearch-plugins.yml
   done
