@@ -9,18 +9,17 @@ fi
 MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
 PLUGINS=${PLUGINS:-}
 docker network inspect elastic >/dev/null 2>&1 || docker network create elastic
-mkdir -p /es/
-touch /es/elasticsearch-plugins.yml
+
+mkdir -p /es/plugins
 chown -R 1000:1000 /es/
 
 if [[ ! -z $PLUGINS ]]; then
-  # Testing https://www.elastic.co/guide/en/elasticsearch/plugins/current/manage-plugins-using-configuration-file.htlm
-  echo 'plugins:' > /es/elasticsearch-plugins.yml
-  plugins_array=($PLUGINS)
-  for p in ${plugins_array[@]}
-  do
-    echo "  - id: $p" >> /es/elasticsearch-plugins.yml
-  done
+  docker run --rm \
+         --network=elastic \
+         -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+         --entrypoint=/usr/share/elasticsearch/bin/elasticsearch-plugin \
+         docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION} \
+         install ${PLUGINS/\\n/ } --batch
 fi
 
 for (( node=1; node<=${NODES-1}; node++ ))
@@ -72,7 +71,7 @@ END
   # If plugins
   if [[ ! -z $PLUGINS ]]; then
     environment+=($(cat <<-END
-      -v /es/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml
+      -v /es/plugins/:/usr/share/elasticsearch/plugins/
 END
 ))
   fi
