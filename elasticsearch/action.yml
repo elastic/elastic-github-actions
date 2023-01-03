@@ -39,4 +39,4 @@ runs:
     PORT: ${{ inputs.port }}
     PLUGINS: ${{ inputs.plugins }}
     SECURITY_ENABLED: ${{ inputs.security-enabled }}
-    ELASTICSEARCH_PASSWORD: ${{ inputs.elasticsearch_password-enabled }}
+    ELASTICSEARCH_PASSWORD: ${{ inputs.elasticsearch_password }}
