@@ -193,6 +193,7 @@ jobs:
           elasticsearch_password: 'changedpassword'
 
       - name: Elasticsearch is reachable
+        # Use --fail to ensure failure on a 401 (not authorized).
         run: |
-          curl --verbose --show-error -k -u elastic:changedpassword https://localhost:9200
+          curl --verbose --show-error --fail -k -u elastic:changedpassword https://localhost:9200
 
