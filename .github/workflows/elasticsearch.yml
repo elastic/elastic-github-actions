@@ -144,7 +144,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: [ "7.15.1" ]
+        elasticsearch: ["7.17.22", "8.14.3"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
