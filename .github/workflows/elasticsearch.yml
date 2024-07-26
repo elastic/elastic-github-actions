@@ -162,8 +162,8 @@ jobs:
           security-enabled: false
           stack-version: ${{ matrix.elasticsearch }}
           plugins: |
-            ingest-attachment
             analysis-icu
+            analysis-kuromoji
 
       - name: Elasticsearch is reachable
         run: |
