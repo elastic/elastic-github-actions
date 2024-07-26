@@ -16,6 +16,7 @@ chown -R 1000:1000 /es/
 
 if [[ ! -z $PLUGINS ]]; then
   docker run --rm \
+    --user=0:0 \
     --network=elastic \
     -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
     --entrypoint=/usr/share/elasticsearch/bin/elasticsearch-plugin \
