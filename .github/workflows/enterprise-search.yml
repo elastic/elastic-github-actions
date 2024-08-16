@@ -20,7 +20,7 @@ jobs:
       - name: Start Elastic Enterprise Search
         uses: ./enterprise-search
         with:
-          stack-version: 7.x-SNAPSHOT
+          stack-version: 7.17-SNAPSHOT
 
       - name: Enterprise Search is reachable
         run: |
