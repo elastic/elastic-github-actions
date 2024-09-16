@@ -78,7 +78,7 @@ do
       --name="es${node}" \
       -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-  elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
+  elif [ "x${MAJOR_VERSION}" == 'x8' ] || [ "x${MAJOR_VERSION}" == 'x9' ]; then
     if [ "${SECURITY_ENABLED}" == 'true' ]; then
       elasticsearch_password=${ELASTICSEARCH_PASSWORD-'changeme'}
       docker run \
