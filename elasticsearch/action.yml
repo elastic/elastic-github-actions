@@ -29,7 +29,11 @@ inputs:
   plugins:
     description: 'Plugins that you want to include'
     required: false
-
+  wait:
+    description: 'Number of seconds to wait after launch'
+    required: false
+    default: 10
+    
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -40,3 +44,4 @@ runs:
     PLUGINS: ${{ inputs.plugins }}
     SECURITY_ENABLED: ${{ inputs.security-enabled }}
     ELASTICSEARCH_PASSWORD: ${{ inputs.elasticsearch_password }}
+    WAIT: ${{ inputs.wait }}
