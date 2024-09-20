@@ -156,6 +156,6 @@ else
     http://es1:$PORT
 fi
 
-sleep 10
+sleep $WAIT
 
 echo "Elasticsearch up and running"
