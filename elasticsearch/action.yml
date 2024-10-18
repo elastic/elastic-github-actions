@@ -37,6 +37,10 @@ inputs:
     description: 'Name of the network to create with docker'
     required: false
     default: elastic
+  container-name:
+    description: 'Name for the container'
+    required: false
+    default: es
 
 runs:
   using: 'docker'
@@ -50,3 +54,4 @@ runs:
     ELASTICSEARCH_PASSWORD: ${{ inputs.elasticsearch_password }}
     WAIT: ${{ inputs.wait }}
     NETWORK_NAME: ${{ inputs.network-name }}
+    CONTAINER_NAME: ${{ inputs.container-name }}
