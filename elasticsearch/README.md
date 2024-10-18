@@ -22,6 +22,7 @@ ___
 | `elasticsearch_password` | No       | changeme | The password for the user elastic in your cluster                                                                                         |
 | `wait`                   | No       | 10       | Number of seconds to wait after launch.                                                                                                   |
 | `plugins`                | No       |          | Any plugins you want to include                                                                                                           |
+| `network`                | No       | elastic  | Custom name for the network created by Docker                                                                                             |
 
 ## Usage
 
