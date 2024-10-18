@@ -8,8 +8,9 @@ if [[ -z $STACK_VERSION ]]; then
 fi
 
 MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
+NETWORK_NAME=${NETWORK_NAME:-elastic}
 
-docker network inspect elastic >/dev/null 2>&1 || docker network create elastic
+docker network inspect $NETWORK_NAME >/dev/null 2>&1 || docker network create $NETWORK_NAME
 
 mkdir -p /es/plugins/
 chown -R 1000:1000 /es/
@@ -17,7 +18,7 @@ chown -R 1000:1000 /es/
 if [[ ! -z $PLUGINS ]]; then
   docker run --rm \
     --user=0:0 \
-    --network=elastic \
+    --network=$NETWORK_NAME \
     -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
     --entrypoint=/usr/share/elasticsearch/bin/elasticsearch-plugin \
     docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION} \
@@ -52,7 +53,7 @@ do
       --publish "${port}:${port}" \
       --publish "${port_com}:${port_com}" \
       --detach \
-      --network=elastic \
+      --network=$NETWORK_NAME \
       --name="es${node}" \
       -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
@@ -74,7 +75,7 @@ do
       --ulimit memlock=-1:-1 \
       --publish "${port}:${port}" \
       --detach \
-      --network=elastic \
+      --network=$NETWORK_NAME \
       --name="es${node}" \
       -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
       docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
@@ -97,7 +98,7 @@ do
         --ulimit nofile=65536:65536 \
         --ulimit memlock=-1:-1 \
         --publish "${port}:${port}" \
-        --network=elastic \
+        --network=$NETWORK_NAME \
         --name="es${node}" \
         --detach \
         -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
@@ -119,7 +120,7 @@ do
         --ulimit nofile=65536:65536 \
         --ulimit memlock=-1:-1 \
         --publish "${port}:${port}" \
-        --network=elastic \
+        --network=$NETWORK_NAME \
         --name="es${node}" \
         --detach \
         -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
@@ -130,7 +131,7 @@ done
 
 if [ "x${MAJOR_VERSION}" == 'x8' ] && [ "${SECURITY_ENABLED}" == 'true' ]; then
   docker run \
-    --network elastic \
+    --network $NETWORK_NAME \
     --rm \
     appropriate/curl \
     --max-time 120 \
@@ -144,7 +145,7 @@ if [ "x${MAJOR_VERSION}" == 'x8' ] && [ "${SECURITY_ENABLED}" == 'true' ]; then
     https://es1:$PORT
 else
   docker run \
-    --network elastic \
+    --network $NETWORK_NAME \
     --rm \
     appropriate/curl \
     --max-time 120 \
