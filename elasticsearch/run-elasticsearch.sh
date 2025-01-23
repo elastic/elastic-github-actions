@@ -10,6 +10,7 @@ fi
 MAJOR_VERSION=`echo ${STACK_VERSION} | cut -c 1`
 NETWORK_NAME=${NETWORK_NAME:-elastic}
 CONTAINER_NAME=${CONTAINER_NAME:-es}
+SECURITY_ENABLED=${SECURITY_ENABLED:-true}
 
 docker network inspect $NETWORK_NAME >/dev/null 2>&1 || docker network create $NETWORK_NAME
 
