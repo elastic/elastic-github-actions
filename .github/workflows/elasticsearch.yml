@@ -174,7 +174,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["8.18.0-SNAPSHOT"]
+        elasticsearch: ["8.18.0-SNAPSHOT", "9.0.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1

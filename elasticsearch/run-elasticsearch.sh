@@ -131,7 +131,7 @@ do
   fi
 done
 
-if [ "x${MAJOR_VERSION}" == 'x8' ] && [ "${SECURITY_ENABLED}" == 'true' ]; then
+if ([ "x${MAJOR_VERSION}" == 'x8' ] || [ "x${MAJOR_VERSION}" == 'x9' ]) && [ "${SECURITY_ENABLED}" == 'true' ]; then
   docker run \
     --network $NETWORK_NAME \
     --rm \
