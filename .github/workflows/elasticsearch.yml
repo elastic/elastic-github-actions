@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.18.0-SNAPSHOT", "9.0.0-SNAPSHOT"]
+        elasticsearch: ["6.8-SNAPSHOT", "7.17-SNAPSHOT", "8.19.12-SNAPSHOT", "9.3.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.18.0-SNAPSHOT", "9.0.0-SNAPSHOT"]
+        elasticsearch: ["6.8-SNAPSHOT", "7.17-SNAPSHOT", "8.19.12-SNAPSHOT", "9.3.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.18.0-SNAPSHOT", "9.0.0-SNAPSHOT"]
+        elasticsearch: ["6.8-SNAPSHOT", "7.17-SNAPSHOT", "8.19.12-SNAPSHOT", "9.3.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -103,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.8-SNAPSHOT", "7.x-SNAPSHOT", "8.18.0-SNAPSHOT", "9.0.0-SNAPSHOT"]
+        elasticsearch: ["6.8-SNAPSHOT", "7.17-SNAPSHOT", "8.19.12-SNAPSHOT", "9.3.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -144,7 +144,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["7.17.22", "8.17.0"]
+        elasticsearch: ["7.17.29", "8.19.11"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -174,7 +174,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["8.18.0-SNAPSHOT", "9.0.0-SNAPSHOT"]
+        elasticsearch: ["8.19.12-SNAPSHOT", "9.3.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -202,7 +202,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["9.0.0-SNAPSHOT"]
+        elasticsearch: ["9.3.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -228,7 +228,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["9.0.0-SNAPSHOT"]
+        elasticsearch: ["9.3.0-SNAPSHOT"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
